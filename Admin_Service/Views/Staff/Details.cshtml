@@ -1,11 +1,8 @@
 ﻿@model Admin_Service.Models.Staff
-
 @{
     ViewData["Title"] = "Details";
 }
-
 <h2>Details</h2>
-
 <div>
     <h4>Staff</h4>
     <hr />
@@ -27,6 +24,24 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.StaffRole)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StaffPermision)
+        </dt>        
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Staff Permission</th>
+                </tr>
+                @foreach (var item in Model.StaffPermision)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(ModelItem => item.Permission)
+                        </td>
+                    </tr>
+                }
+            </table>
         </dd>
     </dl>
 </div>

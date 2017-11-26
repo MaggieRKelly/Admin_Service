@@ -32,17 +32,29 @@ namespace Admin_Service.Data
             }
             context.SaveChanges();
 
+            var CardDetails = new CardDetails[]
+                {
+                new CardDetails { ID=1, CardNum=1234567891234567, CvsNum=246,
+                    ExpDate ="12-12-2018" }
+                };
+            foreach (CardDetails c in CardDetails)
+            {
+                context.CardDetails.Add(c);
+            }
+            context.SaveChanges();
+
             var staffPermission = new StaffPermission[]
           {
-                new StaffPermission{StaffID="1", Permission=Permission.Purchasing},
-                new StaffPermission{StaffID="1", Permission=Permission.EditInvoice},
-                new StaffPermission{StaffID="1", Permission=Permission.ViewCustMsg},
-                new StaffPermission{StaffID="2", Permission=Permission.Purchasing},
-                new StaffPermission{StaffID="2", Permission=Permission.EditInvoice},
-                new StaffPermission{StaffID="2", Permission=Permission.ViewCustMsg},
-                new StaffPermission{StaffID="3", Permission=Permission.Purchasing},
-                new StaffPermission{StaffID="3", Permission=Permission.EditInvoice},
-                new StaffPermission{StaffID="3", Permission=Permission.ViewCustMsg},
+                new StaffPermission{StaffID=1, Permission=Permission.EditCardDetails},
+                new StaffPermission{StaffID=1, Permission=Permission.Purchasing},
+                new StaffPermission{StaffID=1, Permission=Permission.EditInvoice},
+                new StaffPermission{StaffID=1, Permission=Permission.ViewCustMsg},
+                new StaffPermission{StaffID=2, Permission=Permission.Purchasing},
+                new StaffPermission{StaffID=2, Permission=Permission.EditInvoice},
+                new StaffPermission{StaffID=2, Permission=Permission.ViewCustMsg},
+                new StaffPermission{StaffID=3, Permission=Permission.Purchasing},
+                new StaffPermission{StaffID=3, Permission=Permission.EditInvoice},
+                new StaffPermission{StaffID=3, Permission=Permission.ViewCustMsg},
           };
             foreach (StaffPermission p in staffPermission)
             {

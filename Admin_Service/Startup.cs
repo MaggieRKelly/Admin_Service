@@ -26,6 +26,8 @@ namespace Admin_Service
             services.AddDbContext<StaffContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //services.AddIdentity<ApplicatonUser, IdentityRole>();
+
             services.AddMvc();
         }
 

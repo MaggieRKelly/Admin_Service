@@ -34,7 +34,11 @@ namespace Admin_Service.Controllers
             }
 
             var staff = await _context.Staff
+                .Include(s => s.StaffPermision)
+                    .ThenInclude(e => e.CardDetails)
+                .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.ID == id);
+
             if (staff == null)
             {
                 return NotFound();
@@ -54,13 +58,23 @@ namespace Admin_Service.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,StaffName,StaffSurname,StaffRole")] Staff staff)
+        public async Task<IActionResult> Create([Bind("StaffName,StaffSurname,StaffRole")] Staff staff)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(staff);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(staff);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //log the error(uncomment ex variable name and write a log.
+                ModelState.AddModelError("", "Unable to save changes. " +
+                    "Try again, and if the problem persists " +
+                    "see your system administrator.");
             }
             return View(staff);
         }
@@ -84,51 +98,56 @@ namespace Admin_Service.Controllers
         // POST: Staff/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,StaffName,StaffSurname,StaffRole")] Staff staff)
-        {
-            if (id != staff.ID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(staff);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StaffExists(staff.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(staff);
-        }
-
-        // GET: Staff/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> EditPost(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var staffToUpdate = await _context.Staff.SingleOrDefaultAsync(s => s.ID == id);
+            if (await TryUpdateModelAsync<Staff>(
+                staffToUpdate,
+                "",
+                s => s.StaffName, s => s.StaffSurname, s => s.StaffRole))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    //log the error(uncomment ex variable name and write a log.
+                    ModelState.AddModelError("", "Unable to save changes. " +
+                        "Try again, and if the problem persists " +
+                        "see your system administrator.");
+                }
+            }
 
+            return View(staffToUpdate);
+        }
+
+        // GET: Staff/Delete/5
+        public async Task<IActionResult> Delete(int? id, bool? saveChangesError = false)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
             var staff = await _context.Staff
+                .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.ID == id);
             if (staff == null)
             {
                 return NotFound();
+            }
+            if (saveChangesError.GetValueOrDefault())
+            {
+                ViewData["ErrorMessage"] =
+                     "Delete failed. Try again, and if the problem persists " +
+                     "see your system administrator.";
             }
 
             return View(staff);
@@ -139,15 +158,26 @@ namespace Admin_Service.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var staff = await _context.Staff.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Staff.Remove(staff);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+            var staff = await _context.Staff
+                    .AsNoTracking()
+        .SingleOrDefaultAsync(m => m.ID == id);
+            if (staff == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
-        private bool StaffExists(int id)
-        {
-            return _context.Staff.Any(e => e.ID == id);
-        }
+            try
+            {
+                _context.Staff.Remove(staff);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.)
+                return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
+            }
+        }    
+
     }
 }

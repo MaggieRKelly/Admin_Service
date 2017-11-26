@@ -13,13 +13,18 @@ namespace Admin_Service.Data
         {
         }
 
-        public DbSet<Staff> Staff { get; set; }
+        public DbSet<CardDetails> CardDetails { get; set; }
         public DbSet<StaffPermission> StaffPermission { get; set; }
+        public DbSet<Staff> Staff { get; set; }
+        public DbSet<StaffLogin> StaffLogin { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Staff>().ToTable("Staff");
+            modelBuilder.Entity<CardDetails>().ToTable("CardDetails");
             modelBuilder.Entity<StaffPermission>().ToTable("StaffPermission");
+            modelBuilder.Entity<Staff>().ToTable("Staff");
+            modelBuilder.Entity<StaffLogin>().ToTable("StaffLogin");
 
         }
 
