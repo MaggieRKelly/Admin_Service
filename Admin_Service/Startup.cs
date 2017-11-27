@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Admin_Service.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Admin_Service.Models;
 
 namespace Admin_Service
 {
@@ -26,7 +28,9 @@ namespace Admin_Service
             services.AddDbContext<StaffContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddIdentity<ApplicatonUser, IdentityRole>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<StaffContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc();
         }
@@ -44,6 +48,7 @@ namespace Admin_Service
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseAuthentication();
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
