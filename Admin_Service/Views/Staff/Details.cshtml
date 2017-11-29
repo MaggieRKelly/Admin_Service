@@ -8,6 +8,12 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.StaffName)
         </dt>
         <dd>
@@ -25,22 +31,39 @@
         <dd>
             @Html.DisplayFor(model => model.StaffRole)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StaffPermision)
-        </dt>        
+    
         <dd>
             <table class="table">
                 <tr>
                     <th>Staff Permission</th>
                 </tr>
-                @foreach (var item in Model.StaffPermision)
-                {
+                @*@foreach (var item in Model.StaffName)*@
+                
                     <tr>
                         <td>
-                            @Html.DisplayFor(ModelItem => item.Permission)
+                            @Html.DisplayFor(model => model.PurchasingPermission)
+                            @Html.DisplayNameFor(model => model.PurchasingPermission)
                         </td>
                     </tr>
-                }
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.EditCardPermission)
+                            @Html.DisplayNameFor(model => model.EditCardPermission)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.EditInvPermission)
+                            @Html.DisplayNameFor(model => model.EditInvPermission)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.ViewCustMsgPermission)
+                            @Html.DisplayNameFor(model => model.ViewCustMsgPermission)
+                        </td>
+                    </tr>
+                
             </table>
         </dd>
     </dl>

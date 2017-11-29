@@ -6,8 +6,8 @@ namespace Admin_Service.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required, MaxLength(256) ,Display(Name = "User Name")]
-        public string UserName { get; set; }
+        [Required, EmailAddress, MaxLength(256) ,Display(Name = "Email Address")]
+        public string Email { get; set; }
 
         [Required, MinLength(6), MaxLength(50), DataType(DataType.Password), Display(Name = "Password")]
         public string Password { get; set; }

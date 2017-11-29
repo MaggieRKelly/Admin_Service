@@ -1,4 +1,4 @@
-﻿@model Admin_Service.Models.Staff
+﻿@model Admin_Service.Models.CardDetails
 
 @{
     ViewData["Title"] = "Delete";
@@ -8,29 +8,26 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Staff</h4>
+    <h4>CardDetails</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dt>
-            @Html.DisplayNameFor(model => model.StaffName)
+            @Html.DisplayNameFor(model => model.CardNum)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StaffName)
+            @Html.DisplayFor(model => model.CardNum)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.StaffSurname)
+            @Html.DisplayNameFor(model => model.ExpDate)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StaffSurname)
+            @Html.DisplayFor(model => model.ExpDate)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.StaffRole)
+            @Html.DisplayNameFor(model => model.CvsNum)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.StaffRole)
+            @Html.DisplayFor(model => model.CvsNum)
         </dd>
     </dl>
     

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Admin_Service.Models.Staff>
+﻿@model IEnumerable<Admin_Service.Models.CardDetails>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,16 +13,13 @@
     <thead>
         <tr>
                 <th>
-                     @Html.DisplayNameFor(model => model.Email)
+                    @Html.DisplayNameFor(model => model.CardNum)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StaffName)
+                    @Html.DisplayNameFor(model => model.ExpDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StaffSurname)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StaffRole)
+                    @Html.DisplayNameFor(model => model.CvsNum)
                 </th>
             <th></th>
         </tr>
@@ -31,16 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.CardNum)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StaffName)
+                @Html.DisplayFor(modelItem => item.ExpDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StaffSurname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StaffRole)
+                @Html.DisplayFor(modelItem => item.CvsNum)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
