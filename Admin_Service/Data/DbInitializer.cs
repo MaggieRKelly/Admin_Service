@@ -22,10 +22,14 @@ namespace Admin_Service.Data
             }
             var staff = new Staff[]
             {
-                new Staff{StaffName="Maggie", StaffSurname="Kelly"},
-                new Staff{StaffName="Rob", StaffSurname="Brown"},
-                new Staff{StaffName="chris", StaffSurname="Culley"},
-            };
+                new Staff{StaffName="Maggie", StaffSurname="Kelly", PurchasingPermission=true,
+                            ViewCustMsgPermission=true, EditInvPermission=true, EditCardPermission=true},
+                new Staff{StaffName="Rob", StaffSurname="Brown", PurchasingPermission=true,
+                            ViewCustMsgPermission=true, EditInvPermission=true,},
+                new Staff{StaffName="chris", StaffSurname="Culley", PurchasingPermission=true,
+                            ViewCustMsgPermission=true, EditInvPermission=true,},
+
+    };
             foreach (Staff s in staff)
             {
                 context.Staff.Add(s);
@@ -40,25 +44,6 @@ namespace Admin_Service.Data
             foreach (CardDetails c in CardDetails)
             {
                 context.CardDetails.Add(c);
-            }
-            context.SaveChanges();
-
-            var staffPermission = new StaffPermission[]
-          {
-                new StaffPermission{StaffID=1, Permission=Permission.EditCardDetails},
-                new StaffPermission{StaffID=1, Permission=Permission.Purchasing},
-                new StaffPermission{StaffID=1, Permission=Permission.EditInvoice},
-                new StaffPermission{StaffID=1, Permission=Permission.ViewCustMsg},
-                new StaffPermission{StaffID=2, Permission=Permission.Purchasing},
-                new StaffPermission{StaffID=2, Permission=Permission.EditInvoice},
-                new StaffPermission{StaffID=2, Permission=Permission.ViewCustMsg},
-                new StaffPermission{StaffID=3, Permission=Permission.Purchasing},
-                new StaffPermission{StaffID=3, Permission=Permission.EditInvoice},
-                new StaffPermission{StaffID=3, Permission=Permission.ViewCustMsg},
-          };
-            foreach (StaffPermission p in staffPermission)
-            {
-                context.StaffPermission.Add(p);
             }
             context.SaveChanges();
 

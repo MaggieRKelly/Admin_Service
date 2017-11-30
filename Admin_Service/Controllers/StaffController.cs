@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Admin_Service.Data;
+﻿using Admin_Service.Data;
 using Admin_Service.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Admin_Service.Controllers
 {
@@ -20,7 +17,8 @@ namespace Admin_Service.Controllers
         }
 
         // GET: Staff
-        public async Task<IActionResult> Index()
+        [Authorize]
+        public async Task<IActionResult> Index(Staff staff)
         {
             return View(await _context.Staff.ToListAsync());
         }
@@ -34,8 +32,6 @@ namespace Admin_Service.Controllers
             }
 
             var staff = await _context.Staff
-                .Include(s => s.StaffPermision)
-                    .ThenInclude(e => e.CardDetails)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.ID == id);
 
@@ -58,7 +54,7 @@ namespace Admin_Service.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StaffName,StaffSurname,StaffRole")] Staff staff)
+        public async Task<IActionResult> Create([Bind("StaffName,StaffSurname,StaffRole,")] Staff staff)
         {
             try
             {
@@ -95,6 +91,7 @@ namespace Admin_Service.Controllers
             return View(staff);
         }
 
+
         // POST: Staff/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -110,7 +107,8 @@ namespace Admin_Service.Controllers
             if (await TryUpdateModelAsync<Staff>(
                 staffToUpdate,
                 "",
-                s => s.StaffName, s => s.StaffSurname, s => s.StaffRole))
+                s => s.StaffName, s => s.StaffSurname, s => s.StaffRole, s => s.EditCardPermission,
+                s => s.EditInvPermission, s => s.PurchasingPermission, s => s.ViewCustMsgPermission))
             {
                 try
                 {
@@ -177,7 +175,7 @@ namespace Admin_Service.Controllers
                 //Log the error (uncomment ex variable name and write a log.)
                 return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
             }
-        }    
+        }
 
     }
 }

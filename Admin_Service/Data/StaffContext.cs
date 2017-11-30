@@ -15,7 +15,6 @@ namespace Admin_Service.Data
         }
 
         public DbSet<CardDetails> CardDetails { get; set; }
-        public DbSet<StaffPermission> StaffPermission { get; set; }
         public DbSet<Staff> Staff { get; set; }
 
 
@@ -27,7 +26,6 @@ namespace Admin_Service.Data
             base.OnModelCreating(builder);
 
             builder.Entity<CardDetails>().ToTable("CardDetails");
-            builder.Entity<StaffPermission>().ToTable("StaffPermission");
             builder.Entity<Staff>().ToTable("Staff");
 
         }

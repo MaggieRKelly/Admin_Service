@@ -11,9 +11,10 @@ using System;
 namespace Admin_Service.Migrations
 {
     [DbContext(typeof(StaffContext))]
-    partial class StaffContextModelSnapshot : ModelSnapshot
+    [Migration("20171127171524_StaffPermissionChange")]
+    partial class StaffPermissionChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,13 +81,11 @@ namespace Admin_Service.Migrations
 
                     b.Property<int>("CvsNum");
 
+                    b.Property<bool>("EditCardPermission");
+
                     b.Property<string>("ExpDate");
 
-                    b.Property<int?>("StaffID");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("StaffID");
 
                     b.ToTable("CardDetails");
                 });
@@ -99,8 +98,6 @@ namespace Admin_Service.Migrations
                     b.Property<bool>("EditCardPermission");
 
                     b.Property<bool>("EditInvPermission");
-
-                    b.Property<string>("Email");
 
                     b.Property<bool>("PurchasingPermission");
 
@@ -223,13 +220,6 @@ namespace Admin_Service.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Admin_Service.Models.CardDetails", b =>
-                {
-                    b.HasOne("Admin_Service.Models.Staff", "Staff")
-                        .WithMany()
-                        .HasForeignKey("StaffID");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

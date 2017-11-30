@@ -1,8 +1,8 @@
-﻿@model RegisterViewModel
+﻿@model LoginViewModel
 
-    <h2>Registration Page </h2>
+<h2>Login Page </h2>
 
-<form method="post" asp-controller="Account" asp-action="Register">
+<form method="post" asp-controller="Account" asp-action="Login">
     <div asp-validation-summary="All"></div>
 
     <div>
@@ -16,9 +16,9 @@
         <span asp-validation-for="Password"></span>
     </div>
     <div>
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" />
-        <span asp-validation-for="ConfirmPassword"></span>
+        <label asp-for="RememberMe"></label>
+        <input asp-for="RememberMe" />
+        <span asp-validation-for="RememberMe"></span>
     </div>
-    <div><input type="submit" value="Register" /></div>
+    <div><p><input type="submit" value="Login" /></p><p><a asp-action="Register"> Register </a></p></div>
 </form>
