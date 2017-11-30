@@ -1,5 +1,7 @@
 ﻿@model LoginViewModel
 
+<h2>Login Page </h2>
+
 <form method="post" asp-controller="Account" asp-action="Login">
     <div asp-validation-summary="All"></div>
 
@@ -18,5 +20,5 @@
         <input asp-for="RememberMe" />
         <span asp-validation-for="RememberMe"></span>
     </div>
-    <div><input type="submit" value="Login" /></div>
+    <div><p><input type="submit" value="Login" /></p><p><a asp-action="Register"> Register </a></p></div>
 </form>
