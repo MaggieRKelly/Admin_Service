@@ -1,5 +1,6 @@
 ﻿using Admin_Service.Data;
 using Admin_Service.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Admin_Service.Controllers
         }
 
         // GET: Staff
+        [Authorize]
         public async Task<IActionResult> Index(Staff staff)
         {
             return View(await _context.Staff.ToListAsync());
@@ -173,7 +175,7 @@ namespace Admin_Service.Controllers
                 //Log the error (uncomment ex variable name and write a log.)
                 return RedirectToAction(nameof(Delete), new { id = id, saveChangesError = true });
             }
-        }    
+        }
 
     }
 }

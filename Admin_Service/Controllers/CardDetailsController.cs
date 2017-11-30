@@ -1,5 +1,6 @@
 ﻿using Admin_Service.Data;
 using Admin_Service.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -17,9 +18,11 @@ namespace Admin_Service.Controllers
         }
 
         // GET: CardDetails
-        public async Task<IActionResult> Index()
+        [Authorize]
+        public async Task<IActionResult> Index(Staff staff)
         {
-            return View(await _context.CardDetails.ToListAsync());
+                return View(await _context.CardDetails.ToListAsync());
+            
         }
 
         // GET: CardDetails/Details/5
