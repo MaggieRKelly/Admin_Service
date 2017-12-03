@@ -29,34 +29,6 @@ namespace Admin_Service.Controllers
             return View();
         }
 
-
-        //private const string Secret = "db3OIsj+BXE9NZDy0t8W3TcNekrF+2d/1sFnWG4HnV8TZY30iTOdtVWJG8abWvB1GlOgJuQZdcF2Luqm/hccMw==";
-
-        //public static string GenerateToken(string username,string  role,  int expireMinutes = 20)
-        //{
-        //    var symmetricKey = Convert.FromBase64String(Secret);
-        //    var tokenHandler = new JwtSecurityTokenHandler();
-        //    var now = DateTime.UtcNow;
-        //    var tokenDescriptor = new SecurityTokenDescriptor
-        //    {
-        //        //This is adding bits to the token
-        //        Subject = new ClaimsIdentity(new[]
-        //                {
-        //                new Claim(ClaimTypes.Name, username),
-        //                new Claim(ClaimTypes.Role, role)
-        //            }),
-
-        //        Expires = now.AddMinutes(Convert.ToInt32(expireMinutes)),
-
-        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256Signature)
-        //    };
-
-        //    var stoken = tokenHandler.CreateToken(tokenDescriptor);
-        //    var token = tokenHandler.WriteToken(stoken);
-
-        //    return token;
-        //}
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -67,9 +39,13 @@ namespace Admin_Service.Controllers
                 var result = await _signInManager.PasswordSignInAsync(vm.Email, vm.Password, vm.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    //This is me creating a token 
-                    ///GenerateToken("persons name", "staff", 60);
-                    return RedirectToAction("Index", "Home");
+                    var userName = vm.Email;
+                    if (userName == "admin@testing.com")
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+
+                    return RedirectToAction("Index", "Staff");
                 }
                 ModelState.AddModelError("", "Invalid Login Attempt.");
                 return View(vm);
@@ -110,6 +86,19 @@ namespace Admin_Service.Controllers
             }
             return View(vm);
         }
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
+
+        //POST:/Account/LogOut
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
     }
 }
