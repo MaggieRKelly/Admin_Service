@@ -21,13 +21,13 @@ namespace Admin_Service.Controllers
         [Authorize]
         public async Task<IActionResult> Index(Staff staff)
         {
-                return View(await _context.CardDetails.ToListAsync());
-            
+            return View(await _context.CardDetails.ToListAsync());
         }
 
         // GET: CardDetails/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -41,6 +41,18 @@ namespace Admin_Service.Controllers
             }
 
             return View(cardDetails);
+        }
+
+        //POST: CardDetails/PurchaseRequest
+        [HttpPost]
+        public string PurchaseRequest(Staff staff)
+        {
+            var purchaseRequest = staff.PurchasingPermission;
+            if (purchaseRequest != true)
+            {
+                return "Staff not authorised to make purchases!";
+            }
+            return "Payment Request Accepted";
         }
 
         // GET: CardDetails/Create
