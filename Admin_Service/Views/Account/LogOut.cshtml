@@ -1,0 +1,14 @@
+﻿@model logOutViewModel
+
+<h2>LogOut </h2>
+
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div asp-validation-summary="All"></div>
+
+    <div>
+        <label asp-for="Logout"></label>
+        <input asp-for="Logout" />
+        <span asp-validation-for="Logout"></span>
+    </div>
+    <div><input type="submit" value="Logout" /></div>
+</form>
