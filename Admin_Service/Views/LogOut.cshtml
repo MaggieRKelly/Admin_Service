@@ -1,0 +1,10 @@
+﻿<form method="post" asp-controller="Account" asp-action="LogOut">
+    <div asp-validation-summary="All"></div>
+
+    <div>
+        <label asp-for="LogOut"></label>
+        <input asp-for="LogOut" />
+        <span asp-validation-for="LogOut"></span>
+    </div>
+    <div><input type="submit" value="LogOut" /></div>
+</form>

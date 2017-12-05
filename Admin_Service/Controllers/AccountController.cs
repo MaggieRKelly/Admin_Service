@@ -91,14 +91,13 @@ namespace Admin_Service.Controllers
             return View();
         }
 
-
         //POST:/Account/LogOut
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("Index", "Home");
+
         }
     }
 }
